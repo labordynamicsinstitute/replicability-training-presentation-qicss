@@ -39,8 +39,12 @@ if (get_os()=="linux") {
   options(repos=paste0("https://cran.microsoft.com/snapshot/",mran.date,"/"))
 }
 
-global.libraries <- c("dplyr","devtools","rprojroot","tictoc","ggplot2","tidycensus","readr")
+global.libraries <- c("dplyr","devtools","rprojroot","tictoc","ggplot2","tidycensus","readr","webshot")
 
 # now install the rest
 results <- sapply(as.list(global.libraries), pkgTest)
+
+# webshot extra config
+
+webshot::install_phantomjs()
 

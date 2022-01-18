@@ -4,9 +4,9 @@ repo=${PWD##*/}
 dockerspace=larsvilhuber
 
 case $USER in
-  vilhuber)
-  #WORKSPACE=$HOME/Workspace/git
-  WORKSPACE=$PWD
+  vilhuber|larsvilhuber)
+  WORKSPACE=$HOME/Workspace/git
+  #WORKSPACE=$PWD
   ;;
   codespace)
   WORKSPACE=/workspaces
@@ -15,15 +15,15 @@ esac
   
 # build the docker if necessary
 
-docker pull $dockerspace/$repo 
 BUILD=no
 arg1=$1
 
+docker pull $dockerspace/$repo 
 if [[ $? == 1 ]]
 then
   ## maybe it's local only
   docker image inspect $dockerspace/$repo > /dev/null
-  [[ $? == 0 ]] && BUILD=no
+  [[ $? == 0 ]] && BUILD=no || BUILD=yes
 fi
 # override
 [[ "$arg1" == "force" ]] && BUILD=yes

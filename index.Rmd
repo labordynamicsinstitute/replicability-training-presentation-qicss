@@ -1,8 +1,7 @@
 ---
-title: "Working with Restricted Access and Big Data"
+title: "Part 1: Template README and Reproducible Practices"
 author: 
   - "Lars Vilhuber"
-  - "David Wasser"
 date: "`r Sys.Date()`"
 output: 
   ioslides_presentation:
@@ -11,9 +10,8 @@ output:
     widescreen: true
 ---
 
-# Credits
-
-Based on an earlier presentation and tutorial at the [Cornell Day of Data 2021](https://labordynamicsinstitute.github.io/day-of-data-2021/).
+```{r, child=c('toc.md')}
+```
 
 ## Overview
 
@@ -23,34 +21,26 @@ Based on an earlier presentation and tutorial at the [Cornell Day of Data 2021](
 
 Part 1:
 
-- Ideal directory and data structure
-- Adapting to confidential / big data
-
-Part 2:
-
-- Secure coding techniques
-- Using templates for reproducibility
+- **Reproducible practices**
+- The role of the template README
 
 ::::
 
 :::: {.column}
-Part 3:
 
-- Techniques to handle data extracts / API use
+- Ideal directory and data structure
+- Some programming practices
 
-Part 4:
-
-- Documenting what you did
 
 ::::
 
 :::
 
-# But first...
+# Reproducible practices
 
 ## Version your code and your results
 
-- Even in restricted environment, use versioning
+- Use versioning
 - If available, use `git`
   - If not available, request `git`
   - If not, use regular backups (scripted, automated)
@@ -87,6 +77,7 @@ Part 4:
 
 - cite articles you reference
 - *cite* data sources you use
+  - We will get back to data citations later!
 
 ::::
 
@@ -134,14 +125,18 @@ It doesn't really matter, as long as it is logical. We will get to how this tran
 - Will not have any of your add-on packages/ libraries/ etc. pre-installed
 - Don’t force them to do tedious things
 
-It might be "Future You!"
+**It might be "Future You!"**
+
+## It *IS* you
+
+The replicator is the first (?) reader of the instructions who will need to reproduce the analysis.
 
 ## Streamlining
 
 - Master script preferred
   - Least amount of manual effort
 - No manual copying of results 
-  - dynamic documents!
+  - (dynamic documents!)
   - Write out/save tables and figures using packages
 - Clear instructions
 - No manual install of packages
@@ -227,32 +222,32 @@ use "$data/path/data.dta"
 :::
 
 
-# Data structure when data is confidential
+# More complex Data structures
 
 ## Back to the TIER protocol
 
 ![TIER Protocol again](images/tier-protocol-2.png)
 
-## Back to the TIER protocol
+## Generic suggested data structure
 
-![TIER Protocol again](images/tier-protocol-home.png)
+![Simplified replication package structure](images/tier-protocol-home.png)
 
 
 ## When data are big/in the cloud
 
 
-![TIER Protocol Big data](images/tier-bigdata.png)
+![Data are big](images/tier-bigdata.png)
 
 ## When data are confidential
 
 
-![TIER Protocol Confidential](images/tier-confidential.png)
+![Confidential data](images/tier-confidential.png)
 
 
 ## When data are confidential
 
 
-![TIER Protocol Confidential](images/tier-confidential2.png)
+![Confidential data in enclaves](images/tier-confidential2.png)
 
 
 ## Project setup examples
@@ -265,12 +260,12 @@ use "$data/path/data.dta"
 This may no longer work:
 
 ```
-/datos/
-    /brutos
-    /limpiados
-    /finales
-/codigo
-/articulo
+/data/
+    /raw
+    /clean
+    /final
+/code
+/article
 ```
 
 ::::
@@ -278,17 +273,19 @@ This may no longer work:
 
 :::: {.column}
 
+But this might
+
 ```
-/proyecto/
-     /datos/
-        /brutos
-        /limpiados
-        /finales
-     /codigo
-     /articulo
-/secretos            (read-only)
-     /impuestos      (read-only)
-     /salarios       (read-only)
+/project123/
+     /data/
+        /raw
+        /clean
+        /final
+     /code
+     /article
+/confidential        (read-only)
+     /taxes          (read-only)
+     /wages          (read-only)
 ```
 
 :::: 
@@ -302,53 +299,34 @@ This may no longer work:
 File structure thus becomes more complex, but fundamentally not so different:
 
 ```{stata, eval=FALSE}
-global taxdata "/secretos/impuestos"  
-global salarydata "/secretos/salarios"  
-global outputdata "/proyecto/datos/limpiados" // this is where you would write the data you create in this project
-global results "/proyecto/articulo"       // All tables for inclusion in your paper go here
-global programs "/proyecto/codigo"    // All programs (which you might "include") are to be found here
+global taxdata    "/confidential/taxes"  
+global salarydata "/confidential/wages"  
+global outputdata "/project/data/clean" // this is where you would write the data you create in this project
+global results    "/project/article"    // All tables for inclusion in your paper go here
+global programs   "/project/code"       // All programs (which you might "include") are to be found here
 ```
 
-# Exercise 1-1
 
-## Set up a project structure
 
-<div class="blue3">
+## Stata configuration files {.smaller}
 
-> Follow the lesson learned here and create a basic project structure
+Or even more robust:
 
-> 1. FORK the following repository: [labordynamicsinstitute/test-part-1-1](https://github.com/labordynamicsinstitute/test-part-1-1)
-> 2. Populate it with the directory structure
-> 3. Push to your Github repository (your own fork)
+```{stata, eval=FALSE}
+global basedir     "/project123"
+global confbase    "/data/provided"
+global project     "$basedir/project"
 
-> Did that work? 
-</div>
-
-## Populate the project structure
-
-<div class="blue3">
-> 4. Add a README describing the purpose of each directory
-> 5. Push to your Github repository
-
-> Did that work?
-</div>
-
-# Exercise 1-2
-
-## Make a portable repository
-
-<div class="blue3">
-Once you are done, at most one line can be changed to make it run!
-
-> 1. FORK the following repository: [labordynamicsinstitute/test-part-1-2](https://github.com/labordynamicsinstitute/test-part-1-2)
-> 2. Modify the code, either Stata or R.
-> 3. Push to your Github repository (your own fork)
-
-</div>
-
-Do you think your code will work on somebody else's computer or in the cloud?
+global taxdata    "$confbase/taxes"  
+global salarydata "$confbase/wages"  
+global outputdata "$project/data/clean" // this is where you would write the data you create in this project
+global results    "$project/article"    // All tables for inclusion in your paper go here
+global programs   "$project/code"       // All programs (which you might "include") are to be found here
+```
 
 
 
-# Next: [Part 2](part2.html)
+# Next up: README
+
+[Template README](part1b.html)
 
