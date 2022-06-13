@@ -3,7 +3,7 @@ on:
   push:
     branches: 
       - main
-  
+      - ciqss 
 jobs:
   create-website:
     runs-on: ubuntu-latest
