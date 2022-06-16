@@ -28,6 +28,10 @@ https://labordynamicsinstitute.github.io/replicability-training-solutions/imperf
   - [the actual Template Report used by AEA](https://github.com/AEADataEditor/replication-template/blob/master/REPLICATION.md)
   - [the template-config.do](https://github.com/AEADataEditor/replication-template/blob/11d1ae2a2db7c5a61ac4e8dcb4fecd1b47d543ec/template-config.do#L64) - you may need to adjust the `$rootdir` in your Stata code. This code should be inserted into any "main" file, or the entire "template-config.do" downloaded and included with the code "`include "config.do"`"
 
+## Creating a (Whole)Tale from a Scholarsportal (Dataverse) entry
+
+- Use [this form](ainwt.html) and simply paste the "`doi:10.1111/caje.22222`" part.
+
 ## List of articles
 
 The list of CJE articles that are eligible for reproducibility checks and replication enhancements is 
