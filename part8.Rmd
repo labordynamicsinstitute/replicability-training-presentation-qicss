@@ -21,8 +21,9 @@ output:
 https://labordynamicsinstitute.github.io/replicability-training-solutions/imperfect-example/REPLICATION.pdf)
 
 
-## A template
+## A template report
 
+This report serves as a starting point for a reproducibility check.
 
 - [Template Report repository](https://github.com/AEADataEditor/replication-template/blob/master/REPLICATION.md)
   - [the actual Template Report used by AEA](https://github.com/AEADataEditor/replication-template/blob/master/REPLICATION.md)
@@ -48,3 +49,6 @@ Upload your finished reports (whenever that happens) to the link provided on the
 
 You'll be asked for email, name, and the DOI of the manuscript/ARTICLE, e.g. only the numeric part (same as in Column A of the spreadsheet): "10.1111/caje.12559", then upload the report (in Markdown or PDF format).
 
+## Creating your own replication package
+
+- [Template README](https://social-science-data-editors.github.io/template_README/)
