@@ -1,5 +1,5 @@
 ---
-title: "Training for LDI Replication Lab"
+title: "Training for 2022 CIQSS/QICSS Summer School"
 author: 
   - "Lars Vilhuber"
 date: "`r Sys.Date()`"
